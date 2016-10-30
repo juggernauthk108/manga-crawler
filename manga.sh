@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for x in `seq 26 850`;
+for x in `seq 1 850`;
 do
 
 mkdir ep$x #make directory for a new episode
