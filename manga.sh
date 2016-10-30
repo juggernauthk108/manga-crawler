@@ -1,12 +1,20 @@
 #!/bin/bash
 
-for x in `seq 1 850`;
+for x in `seq 26 850`;
 do
 
 mkdir ep$x
 cd ep$x
 
-for y in `seq 1 80`;
+y=1 
+
+wget http://www2.watchop.io/manga2/read/one-piece/$x/$y -q -O pagesource
+
+limit=$(grep of... pagesource -o | awk '{print $2}')
+
+echo this episode has : $limit
+
+for y in `seq 1 $limit`;
 do
 
 echo waiting on $x and $y
@@ -15,11 +23,8 @@ wget http://www2.watchop.io/manga2/read/one-piece/$x/$y -q -O pagesource
 
 wait
 
-#wait `ps -aux | grep wget\ http://www2.watchop.io/manga2/read/one-piece/$x/$y | awk '{print $2}' | head -n 1`
-
 wget `grep src.*mangareader.net/one-piece/.*/one-piece-.*.jpg pagesource -o | sed 's/^\(src="\)*//'` -q -O ep$x\_scene$y.jpg
  
-
 echo 
 echo 
 
@@ -29,4 +34,3 @@ rm pagesource
 cd ..
 
 done
-
